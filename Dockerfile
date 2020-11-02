@@ -7,8 +7,8 @@ WORKDIR /usr/src/app
 
 COPY . .
 
-RUN yarn install
-RUN yarn build
+#RUN yarn install
+#RUN yarn build
 
 CMD [ "node", "index.js" ]
 #CMD ["/bin/bash"]
