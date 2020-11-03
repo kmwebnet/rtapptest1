@@ -10,6 +10,7 @@ const express_1 = __importDefault(require("express"));
 const express_ws_1 = __importDefault(require("express-ws"));
 const https_1 = __importDefault(require("https"));
 const fs_1 = __importDefault(require("fs"));
+const path_1 = __importDefault(require("path"));
 const options = {
     key: fs_1.default.readFileSync('/usr/src/app/certs/server.key'),
     cert: fs_1.default.readFileSync('/usr/src/app/certs/server.chain'),
@@ -28,6 +29,9 @@ const { app } = express_ws_1.default(eapp, httpsserver, {
 const connections = new Set();
 // app
 app.use('/app', express_1.default.static(__dirname + '/dist'));
+app.get('/app/*', function (req, res) {
+    res.sendFile(path_1.default.join(__dirname, 'dist', 'index.html'));
+});
 function keepAlive(ws) {
     setTimeout(() => {
         if (ws.readyState === 1) {

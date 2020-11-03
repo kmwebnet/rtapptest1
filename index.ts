@@ -8,6 +8,7 @@ import https from 'https';
 import fs from 'fs';
 import { TLSSocket } from 'tls';
 import ws from 'ws';
+import path from 'path';
 
 const options = {
   key: fs.readFileSync('/usr/src/app/certs/server.key'),
@@ -35,6 +36,9 @@ const connections = new Set<tws>();
 
 // app
 app.use('/app', express.static(__dirname + '/dist'));
+app.get('/app/*', function(req, res) {
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'))
+});
 
 function keepAlive(ws: ws) {
   setTimeout(() => {
