@@ -7,8 +7,13 @@ WORKDIR /usr/src/app
 
 COPY . .
 
+# for main
 #RUN yarn install
 #RUN yarn build
+
+#for test
+RUN yarn add express
+RUN yarn add express-ws
 
 CMD [ "node", "index.js" ]
 #CMD ["/bin/bash"]
