@@ -37,7 +37,7 @@ class Routes extends React.Component<Props, State> {
 
   render() {
     return (
-      <Router>
+      <Router basename='/app'>
       <NavBar show={this.state.open} drawToggleClickHandler={this.handleToggle}
       />
         <Switch>

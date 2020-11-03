@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import GenericTemplate from "./GenericTemplate";
 
 
@@ -7,19 +7,22 @@ import GenericTemplate from "./GenericTemplate";
 function SubComponent() {
 
   const wsUrl = 'wss://' + window.location.host + '/ws';
-  let ws: WebSocket;
+  const ws = useRef(new WebSocket(wsUrl));
 
   const [message, setmessage] = useState<string[]> ([]);
   const handleClick = () => {
     console.log('クリックされました');
-    ws.send('data sent.');
+    ws.current.send('data sent.');
   }
   useEffect(() => {
-    ws = new WebSocket(wsUrl);
-    ws.onmessage = (ev: MessageEvent) => {
-      setmessage(message.concat(ev.data))
+    ws.current.onmessage = (ev: MessageEvent) => {
+        if (ev.data != '') {
+            setmessage(message.concat(ev.data));
+        };
     }
   });
+  useEffect(() => () => ws.current.close(), [ws]) ; 
+  
     return (
       <GenericTemplate>
       <div>
