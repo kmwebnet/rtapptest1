@@ -7,11 +7,11 @@ WORKDIR /usr/src/app
 
 COPY . .
 
-# for main
+# for setting full module to develop
 #RUN yarn install
 #RUN yarn build
 
-#for test
+#for only setting dependency module
 RUN yarn add express
 RUN yarn add express-ws
 
